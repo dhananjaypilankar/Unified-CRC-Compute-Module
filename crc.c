@@ -131,3 +131,5 @@ unsigned int crc_compute(const unsigned int InitValue, const unsigned char Proce
 
     return crc;
 }
+
+/* END OF FILE CRC.C */
