@@ -40,7 +40,7 @@ SOFTWARE.
 *                    Length            ->  Length of Souce Data Buffer in
 *                    number of bytes.
 *  Returns        :  Returns CRC result depending on requested
-*                    by DataBits variable.
+*                    by DataBits variable and returns 0 for Error.
  ****************************************************************** */
 unsigned int crc_compute(const unsigned int InitValue, const unsigned char ProcessDataBits,\
                          const unsigned char *const pSrcBuffer, const unsigned int Length)
