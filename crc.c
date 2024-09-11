@@ -96,7 +96,7 @@ static unsigned int crc_iBitReverseValue(const unsigned int Value,\
 *                    Length            ->  Length of Souce Data Buffer in
 *                    number of bytes.
 *  Returns        :  Returns CRC result depending on requested
-*                    by DataBits variable.
+*                    by DataBits variable and returns 0 for Error.
  ****************************************************************** */
 unsigned int crc_compute(const unsigned int InitValue, const unsigned char ProcessDataBits,\
                          const unsigned char *const pSrcBuffer, const unsigned int Length)
@@ -115,8 +115,8 @@ unsigned int crc_compute(const unsigned int InitValue, const unsigned char Proce
             {
                 return 0;
             }
-            polynomial = crc_iBitReverseValue(CRC8_COMPUTE_POLYNOMIAL, 8);
-            value = crc_iBitReverseValue(InitValue, 8);
+            polynomial = crc_iBitReverseValue(CRC8_COMPUTE_POLYNOMIAL, ProcessDataBits);
+            value = crc_iBitReverseValue(InitValue, ProcessDataBits);
             mask = 0xFF;
             break;
 
@@ -125,14 +125,14 @@ unsigned int crc_compute(const unsigned int InitValue, const unsigned char Proce
             {
                 return 0;
             }
-            polynomial = crc_iBitReverseValue(CRC16_COMPUTE_POLYNOMIAL, 16);
-            value = crc_iBitReverseValue(InitValue, 16);
+            polynomial = crc_iBitReverseValue(CRC16_COMPUTE_POLYNOMIAL, ProcessDataBits);
+            value = crc_iBitReverseValue(InitValue, ProcessDataBits);
             mask = 0xFFFF;
             break;
 
-        case 8:
-            polynomial = crc_iBitReverseValue(CRC32_COMPUTE_POLYNOMIAL, 32);
-            value = crc_iBitReverseValue(InitValue, 32);
+        case 32:
+            polynomial = crc_iBitReverseValue(CRC32_COMPUTE_POLYNOMIAL, ProcessDataBits);
+            value = crc_iBitReverseValue(InitValue, ProcessDataBits);
             mask = 0xFFFFFFFF;
             break;
 
