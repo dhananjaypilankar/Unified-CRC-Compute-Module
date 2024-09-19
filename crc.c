@@ -104,7 +104,7 @@ unsigned int crc_compute(const unsigned int InitValue, const unsigned char Proce
     volatile unsigned int value = 0;
     volatile unsigned int mask = 0;
     volatile unsigned int crc = 0;
-    volatile unsigned int byte = 0;
+    volatile unsigned int index = 0;
     volatile unsigned int polynomial = 0;
     volatile unsigned char byte = 0;
 
