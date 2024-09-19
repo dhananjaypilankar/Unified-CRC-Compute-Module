@@ -43,6 +43,6 @@ SOFTWARE.
 *                    by DataBits variable and returns 0 for Error.
  ****************************************************************** */
 unsigned int crc_compute(const unsigned int InitValue, const unsigned char ProcessDataBits,\
-                         const unsigned char *const pSrcBuffer, const unsigned int Length)
+                         const unsigned char *const pSrcBuffer, const unsigned int Length);
 
 #endif                    /* __CRC_H */
