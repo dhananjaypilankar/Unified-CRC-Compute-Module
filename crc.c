@@ -26,7 +26,7 @@ SOFTWARE.
 *  Filename  :  crc.c
 *  Author    :  Dhananjay Pilankar
 *  Details   :  Implementation of the CRC computation. Code can adapt
-*               to process CRC-8, CRC-16 and CRC-32
+*               to process CRC-8, CRC-16, CRC-24 and CRC-32
  ****************************************************************** */
 #include "crc.h"
 
@@ -42,6 +42,12 @@ SOFTWARE.
     #define CRC16_COMPUTE_POLYNOMIAL         CRC16_USER_POLYNOMIAL
 #endif
 
+#ifndef CRC24_USER_POLYNOMIAL
+    #define CRC24_COMPUTE_POLYNOMIAL         0x00065B
+#else
+    #define CRC24_COMPUTE_POLYNOMIAL         CRC24_USER_POLYNOMIAL
+#endif
+
 #ifndef CRC32_USER_POLYNOMIAL
     #define CRC32_COMPUTE_POLYNOMIAL         0x04C11DB7
 #else
@@ -52,7 +58,7 @@ SOFTWARE.
 *  Function Name  :  crc_iBitReverseValue (Local Function)
 *  Arguments      :  Value            ->  Value to be bit reversed
 *                    ProcessDataBits  ->  Number of bits of result
-*                    viz. 8, 16, 32.
+*                    viz. 8, 16, 24, 32.
 *  Returns        :  Returns bit reversed value depending on requested
 *                    by DataBits variable.
  ****************************************************************** */
@@ -80,6 +86,10 @@ static unsigned int crc_iBitReverseValue(const unsigned int Value,\
             value >>= 16;
             break;
 
+        case 24:
+            value >> 8;
+            break;
+
         default:
             break;
     }
@@ -91,7 +101,7 @@ static unsigned int crc_iBitReverseValue(const unsigned int Value,\
 *  Function Name  :  crc_compute
 *  Arguments      :  InitValue         ->  Initial Value for CRC Computation
 *                    ProcessDataBits   ->  Number of bits of result
-*                    viz. 8, 16, 32.
+*                    viz. 8, 16, 24, 32.
 *                    pSrcBuffer        ->  Pointer to Source Data Buffer
 *                    Length            ->  Length of Souce Data Buffer in
 *                    number of bytes.
@@ -116,7 +126,7 @@ unsigned int crc_compute(const unsigned int InitValue, const unsigned char Proce
                 return 0;
             }
             polynomial = crc_iBitReverseValue(CRC8_COMPUTE_POLYNOMIAL, ProcessDataBits);
-            value = crc_iBitReverseValue(InitValue, ProcessDataBits);
+            value = InitValue & 0xFF;
             mask = 0xFF;
             break;
 
@@ -126,13 +136,23 @@ unsigned int crc_compute(const unsigned int InitValue, const unsigned char Proce
                 return 0;
             }
             polynomial = crc_iBitReverseValue(CRC16_COMPUTE_POLYNOMIAL, ProcessDataBits);
-            value = crc_iBitReverseValue(InitValue, ProcessDataBits);
+            value = InitValue & 0xFFFF;
             mask = 0xFFFF;
+            break;
+
+        case 24:
+            if(InitValue > 0xFFFFFF)
+            {
+                return 0;
+            }
+            polynomial = crc_iBitReverseValue(CRC24_COMPUTE_POLYNOMIAL, ProcessDataBits);
+            value = InitValue & 0xFFFFFF;
+            mask = 0xFFFFFF;
             break;
 
         case 32:
             polynomial = crc_iBitReverseValue(CRC32_COMPUTE_POLYNOMIAL, ProcessDataBits);
-            value = crc_iBitReverseValue(InitValue, ProcessDataBits);
+            value = InitValue & 0xFFFFFFFF;
             mask = 0xFFFFFFFF;
             break;
 
