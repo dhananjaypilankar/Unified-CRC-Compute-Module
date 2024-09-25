@@ -87,7 +87,7 @@ static unsigned int crc_iBitReverseValue(const unsigned int Value,\
             break;
 
         case 24:
-            value >> 8;
+            value >>= 8;
             break;
 
         default:
