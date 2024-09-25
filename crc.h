@@ -29,13 +29,14 @@ SOFTWARE.
 /* You can comment these values and the code will work with these values by default */
 #define CRC8_USER_POLYNOMIAL                 0x31
 #define CRC16_USER_POLYNOMIAL                0x8005
+#define CRC24_USER_POLYNOMIAL                0x00065B
 #define CRC32_USER_POLYNOMIAL                0x04C11DB7
 
 /* ******************************************************************
 *  Function Name  :  crc_compute
 *  Arguments      :  InitValue         ->  Initial Value for CRC Computation
 *                    ProcessDataBits   ->  Number of bits of result
-*                    viz. 8, 16, 32.
+*                    viz. 8, 16, 24, 32.
 *                    pSrcBuffer        ->  Pointer to Source Data Buffer
 *                    Length            ->  Length of Souce Data Buffer in
 *                    number of bytes.
